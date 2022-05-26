@@ -27,5 +27,11 @@
             <asp:Button ID="RegisterButton3" runat="server" OnClick="RegisterButton3_Click" Text="회원가입" />
         </div>
     </form>
+    <section>
+        <form action ="./userMain.aspx" method ="post">
+            <label for="trialUsername">사용자 이름 : </label><input type="text" id="trialUsername" name="TrialUsername" />
+            <input type ="submit" />
+        </form>
+    </section>
 </body>
 </html>

@@ -47,7 +47,7 @@ namespace capstonebook
             }
             reader.Close();
             con.Close();
-
+            
         }
 
         protected void RegisterButton3_Click(object sender, EventArgs e)
