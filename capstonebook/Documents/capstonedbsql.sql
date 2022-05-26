@@ -37,3 +37,5 @@ Values
 
 )
 Go
+
+SET IDENTITY_INSERT [user] ON

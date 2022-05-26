@@ -14,9 +14,9 @@
             <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID :
             <asp:TextBox ID="IDText" runat="server"></asp:TextBox>
-            <br />
+            <br /> 
 &nbsp;password :
-            <asp:TextBox ID="PWText" runat="server"></asp:TextBox>
+            <asp:TextBox ID="PWText" TextMode="Password" runat="server"></asp:TextBox>
 &nbsp;&nbsp;
             <asp:Button ID="LoginButton1" runat="server" OnClick="LoginButton1_Click" Text="로그인" />
             <br />
