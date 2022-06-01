@@ -10,12 +10,12 @@
 <body>
     <form id="form1" runat="server">
         <div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 로그인<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
             <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID :
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID :&nbsp;
             <asp:TextBox ID="IDText" runat="server"></asp:TextBox>
             <br /> 
-&nbsp;password :
+            &nbsp; Password :
             <asp:TextBox ID="PWText" TextMode="Password" runat="server"></asp:TextBox>
 &nbsp;&nbsp;
             <asp:Button ID="LoginButton1" runat="server" OnClick="LoginButton1_Click" Text="로그인" />
@@ -27,11 +27,5 @@
             <asp:Button ID="RegisterButton3" runat="server" OnClick="RegisterButton3_Click" Text="회원가입" />
         </div>
     </form>
-    <section>
-        <form action ="./userMain.aspx" method ="post">
-            <label for="trialUsername">사용자 이름 : </label><input type="text" id="trialUsername" name="TrialUsername" />
-            <input type ="submit" />
-        </form>
-    </section>
 </body>
 </html>

@@ -9,26 +9,15 @@
     <script language="C#" runat="server">
         private void Page_Load(object sender, EventArgs e)
         {
-            string trialUsername = null;
-            HttpCookie objectUsername = null;
-            if (Request.Form["trialUsername"] != null)
-            {
-                trialUsername = Request.Form["trialUsername"];
-            }
-            objectUsername = new HttpCookie("membershipUsername");
-            objectUsername.Value = trialUsername;
-            objectUsername.Expires = DateTime.Now.AddHours(12.0);
-            Response.Cookies.Add(objectUsername);
-            return;
         }
     </script>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-        </div>
         <section>
-            <%=Request.Cookies["membershipUsername"].Value %>
+            <%=Request.Cookies["UserID"].Value %>
+            <%Response.Cookies["UserID"].Expires = DateTime.Today.AddDays(-1);%> <!-- java 구문을 따름, 서버에서 실행됨-->
+            <asp:Label ID="LUserID" runat="server" Text="님 환영합니다."></asp:Label>
         </section>
     </form>
 </body>

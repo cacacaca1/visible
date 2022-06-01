@@ -14,7 +14,10 @@ namespace capstonebook
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            HttpCookie cookie = new HttpCookie("UserID", IDText.Text);
+            Response.Cookies.Add(cookie);
+            Response.Cookies["UserID"].Value = IDText.Text;
+            cookie.Expires = DateTime.Now.AddDays(1);
         }
 
         protected void LoginButton1_Click(object sender, EventArgs e)
@@ -53,6 +56,15 @@ namespace capstonebook
         protected void RegisterButton3_Click(object sender, EventArgs e)
         {
             Response.Redirect("/register.aspx");
+        }
+
+        protected void DataList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        protected void ListView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
