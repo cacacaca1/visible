@@ -26,6 +26,10 @@
 &nbsp;&nbsp;&nbsp;
             <asp:Button ID="RegisterButton3" runat="server" OnClick="RegisterButton3_Click" Text="회원가입" />
         </div>
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="켜기" />
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="끄기" />
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
     </form>
 </body>
 </html>

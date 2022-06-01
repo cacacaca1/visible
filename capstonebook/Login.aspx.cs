@@ -7,11 +7,14 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data.SqlClient;
 using capstonebook.Models;
+using System.IO.Ports;
+using System.Data;
 
 namespace capstonebook
 {
     public partial class Login : System.Web.UI.Page
     {
+        private SerialPort insSerialPort = new SerialPort("COM5", 9600, Parity.None, 8, StopBits.One);
         protected void Page_Load(object sender, EventArgs e)
         {
             HttpCookie cookie = new HttpCookie("UserID", IDText.Text);
@@ -19,7 +22,6 @@ namespace capstonebook
             Response.Cookies["UserID"].Value = IDText.Text;
             cookie.Expires = DateTime.Now.AddDays(1);
         }
-
         protected void LoginButton1_Click(object sender, EventArgs e)
         {
             User user = new User
@@ -56,15 +58,32 @@ namespace capstonebook
         protected void RegisterButton3_Click(object sender, EventArgs e)
         {
             Response.Redirect("/register.aspx");
+            if (insSerialPort.IsOpen)
+            {
+                insSerialPort.Close();
+            }
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            insSerialPort.Open();
+            String data = insSerialPort.ReadLine();
+            int finger = Int32.Parse(data);
+            Label1.Text = data;
+            insSerialPort.Close();
         }
 
-        protected void DataList1_SelectedIndexChanged(object sender, EventArgs e)
+        protected void Button2_Click(object sender, EventArgs e)
         {
-        }
+            insSerialPort.Open();
+            insSerialPort.Write("0");
 
-        protected void ListView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            Label1.Text = "LED 꺼짐";
+            Button1.Enabled = true;
+            Button2.Enabled = false;
+            if (insSerialPort.IsOpen)
+            {
+                insSerialPort.Close();
+            }
         }
     }
 }
