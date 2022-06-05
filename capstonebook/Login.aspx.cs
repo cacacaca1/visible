@@ -58,10 +58,6 @@ namespace capstonebook
         protected void RegisterButton3_Click(object sender, EventArgs e)
         {
             Response.Redirect("/register.aspx");
-            if (insSerialPort.IsOpen)
-            {
-                insSerialPort.Close();
-            }
         }
         protected void Button1_Click(object sender, EventArgs e)
         {

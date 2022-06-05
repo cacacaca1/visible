@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO.Ports;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -16,7 +17,7 @@ namespace capstonebook
         {
 
         }
-
+        private SerialPort insSerialPort = new SerialPort("COM5", 9600, Parity.None, 8, StopBits.One);
         protected void Button1_Click(object sender, EventArgs e)
         {
             User user = new User();
@@ -49,6 +50,30 @@ namespace capstonebook
             Response.Write(str);
             con.Close();
             Response.Redirect("/Login.aspx");
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void FingerprintEnroll_Click(object sender, EventArgs e)
+        {
+            while(true)
+            {
+                insSerialPort.Open();
+                insSerialPort.Write("2");
+                insSerialPort.Write(Fingerbox.Text);
+                String data = insSerialPort.ReadLine();
+                Label1.Text = data;
+                /*int finger = Int32.Parse(data);
+                if (finger > 0)
+                {
+                    Label1.Text = data;
+                }*/
+                insSerialPort.Close();
+                return;
+            }
         }
     }
 }

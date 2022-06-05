@@ -19,6 +19,7 @@
             <%Response.Cookies["UserID"].Expires = DateTime.Today.AddDays(-1);%> <!-- java 구문을 따름, 서버에서 실행됨-->
             <asp:Label ID="LUserID" runat="server" Text="님 환영합니다."></asp:Label>
         </section>
+        <asp:Button ID="Button1" runat="server" Text="지문등록" />
     </form>
 </body>
 </html>

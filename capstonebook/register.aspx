@@ -12,8 +12,7 @@
         <div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 회원가입<br />
             <br />
-            <a href="register.aspx">register.aspx</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID :&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID :&nbsp;
             <asp:TextBox ID="id" runat="server"></asp:TextBox>
             <br />
 &nbsp;&nbsp; password :
@@ -31,7 +30,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:Button ID="Button1" runat="server" Text="가입완료" OnClick="Button1_Click" />
 &nbsp;&nbsp;
-        </div>
+            </div>
+        <p>
+            <asp:Button ID="FingerprintEnroll" runat="server" Text="지문 등록" OnClick="FingerprintEnroll_Click" />
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+            <asp:TextBox ID="Fingerbox" runat="server"></asp:TextBox>
+        </p>
     </form>
 </body>
 </html>
