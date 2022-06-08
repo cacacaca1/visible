@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.IO.Ports;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,11 +14,29 @@ namespace capstonebook
 {
     public partial class regiseter : System.Web.UI.Page
     {
+        SerialPort mySerialPort;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            mySerialPort = new SerialPort("COM5", 9600, Parity.None, 8, StopBits.One);
+            mySerialPort.RtsEnable = true;
+            mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
         }
-        private SerialPort insSerialPort = new SerialPort("COM5", 9600, Parity.None, 8, StopBits.One);
+        private void DataReceivedHandler(
+                        object sender,
+                        SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+                this.Fingerbox.Text = mySerialPort.ReadLine();
+            }
+            catch (InvalidOperationException)
+            {
+                string fail = @"<script language='JavaScript'>
+                                window.alert('다시 시도해주세요 !');
+                                </script>";
+                Response.Write(fail);
+            }
+        }
         protected void Button1_Click(object sender, EventArgs e)
         {
             User user = new User();
@@ -59,20 +78,26 @@ namespace capstonebook
 
         protected void FingerprintEnroll_Click(object sender, EventArgs e)
         {
-            while(true)
+            if (mySerialPort.IsOpen == false)
             {
-                insSerialPort.Open();
-                insSerialPort.Write("2");
-                insSerialPort.Write(Fingerbox.Text);
-                String data = insSerialPort.ReadLine();
-                Label1.Text = data;
-                /*int finger = Int32.Parse(data);
-                if (finger > 0)
+                mySerialPort.Open();
+                mySerialPort.Write("1");
+            }
+            while (true)
+            {
+                mySerialPort.Write(savefinger.Text);
+                if (Fingerbox.Text != "")
                 {
-                    Label1.Text = data;
-                }*/
-                insSerialPort.Close();
-                return;
+                    string goodfinger = @"<script language='JavaScript'>
+                                window.alert('등록이 완료되었습니다.');
+                                </script>";
+                    Response.Write(goodfinger);
+                    if (mySerialPort.IsOpen == true)
+                    {
+                        mySerialPort.Close();
+                    }
+                    return;
+                }
             }
         }
     }

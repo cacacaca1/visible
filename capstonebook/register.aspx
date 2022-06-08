@@ -27,14 +27,20 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; email :
             <asp:TextBox ID="email" runat="server"></asp:TextBox>
             <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="Button1" runat="server" Text="가입완료" OnClick="Button1_Click" />
+&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="FingerID" runat="server" Text="지문 ID : "></asp:Label>
+            <asp:TextBox ID="Fingerbox" runat="server" Height="29px" Width="193px" ReadOnly="True"></asp:TextBox>
+            &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="FingerprintEnroll" runat="server" Text="지문 등록" OnClick="FingerprintEnroll_Click" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;
             </div>
         <p>
-            <asp:Button ID="FingerprintEnroll" runat="server" Text="지문 등록" OnClick="FingerprintEnroll_Click" />
-            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-            <asp:TextBox ID="Fingerbox" runat="server"></asp:TextBox>
+            <asp:Label ID="Label1" runat="server" Text="지문 저장할 곳"></asp:Label>
+            <asp:TextBox ID="savefinger" runat="server" Height="29px" Width="193px"></asp:TextBox>
+        </p>
+        <p>
+            &nbsp;</p>
+        <p>
+            <asp:Button ID="Button1" runat="server" Text="가입완료" OnClick="Button1_Click" />
         </p>
     </form>
 </body>

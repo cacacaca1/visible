@@ -15,12 +15,14 @@ namespace capstonebook
     public partial class Login : System.Web.UI.Page
     {
         private SerialPort insSerialPort = new SerialPort("COM5", 9600, Parity.None, 8, StopBits.One);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             HttpCookie cookie = new HttpCookie("UserID", IDText.Text);
             Response.Cookies.Add(cookie);
             Response.Cookies["UserID"].Value = IDText.Text;
             cookie.Expires = DateTime.Now.AddDays(1);
+
         }
         protected void LoginButton1_Click(object sender, EventArgs e)
         {
@@ -59,27 +61,10 @@ namespace capstonebook
         {
             Response.Redirect("/register.aspx");
         }
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            insSerialPort.Open();
-            String data = insSerialPort.ReadLine();
-            int finger = Int32.Parse(data);
-            Label1.Text = data;
-            insSerialPort.Close();
-        }
 
-        protected void Button2_Click(object sender, EventArgs e)
+        protected void FingerLogin_Click(object sender, EventArgs e)
         {
-            insSerialPort.Open();
-            insSerialPort.Write("0");
 
-            Label1.Text = "LED 꺼짐";
-            Button1.Enabled = true;
-            Button2.Enabled = false;
-            if (insSerialPort.IsOpen)
-            {
-                insSerialPort.Close();
-            }
         }
     }
 }

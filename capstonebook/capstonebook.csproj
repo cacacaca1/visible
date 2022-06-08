@@ -73,6 +73,7 @@
     <Content Include="register.aspx" />
     <Content Include="userMain.aspx" />
     <Content Include="Web.config" />
+    <Content Include="test.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -109,6 +110,13 @@
     </Compile>
     <Compile Include="userMain.aspx.designer.cs">
       <DependentUpon>userMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test.aspx.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test.aspx.designer.cs">
+      <DependentUpon>test.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
