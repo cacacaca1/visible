@@ -15,5 +15,6 @@ namespace capstonebook.Models
         public string email { get; set; }
         public string OX { get; set; }
         public int delayday { get; set; }
+        public int finger { get; set; }
     }
 }

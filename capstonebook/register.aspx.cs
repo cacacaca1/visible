@@ -45,8 +45,9 @@ namespace capstonebook
             user.name = name.Text;
             user.phonenumber = phone.Text;
             user.email = email.Text;
-            
+            user.delayday = Convert.ToInt32(Fingerbox.Text);
 
+            
             SqlConnection con = new SqlConnection();
             con.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             con.Open();
@@ -54,20 +55,21 @@ namespace capstonebook
             cmd.Connection = con;
             cmd.CommandText = @"
                                             insert into dbo.[user]
-                                            (id, password, name, phonenumber, email) 
-                                             VALUES ( @id, @pw, @name, @phone, @email);";
+                                            (id, password, name, phonenumber, email, delayday) 
+                                             VALUES ( @id, @pw, @name, @phone, @email, @delayday);";
             cmd.Parameters.AddWithValue("@id", user.id);
             cmd.Parameters.AddWithValue("@pw", user.password);
             cmd.Parameters.AddWithValue("@name", user.name);
             cmd.Parameters.AddWithValue("@phone", user.phonenumber);
             cmd.Parameters.AddWithValue("@email", user.email);
+            cmd.Parameters.AddWithValue("@delayday", user.delayday);
             cmd.CommandType = System.Data.CommandType.Text;
             cmd.ExecuteNonQuery();
+            con.Close();
             string str = @"<script language='JavaScript'>
                                 window.alert('가입이 완료되었습니다.');
                                 </script>";
             Response.Write(str);
-            con.Close();
             Response.Redirect("/Login.aspx");
         }
 
@@ -81,21 +83,18 @@ namespace capstonebook
             if (mySerialPort.IsOpen == false)
             {
                 mySerialPort.Open();
-                mySerialPort.Write("1");
+                mySerialPort.WriteLine("1");
+                mySerialPort.WriteLine(savefinger.Text);
             }
             while (true)
             {
-                mySerialPort.Write(savefinger.Text);
                 if (Fingerbox.Text != "")
                 {
                     string goodfinger = @"<script language='JavaScript'>
                                 window.alert('등록이 완료되었습니다.');
                                 </script>";
                     Response.Write(goodfinger);
-                    if (mySerialPort.IsOpen == true)
-                    {
-                        mySerialPort.Close();
-                    }
+                    mySerialPort.Close();   
                     return;
                 }
             }

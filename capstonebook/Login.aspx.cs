@@ -14,15 +14,33 @@ namespace capstonebook
 {
     public partial class Login : System.Web.UI.Page
     {
-        private SerialPort insSerialPort = new SerialPort("COM5", 9600, Parity.None, 8, StopBits.One);
-
+        SerialPort mySerialPort;
+        Int32 finger=-1;
         protected void Page_Load(object sender, EventArgs e)
         {
             HttpCookie cookie = new HttpCookie("UserID", IDText.Text);
             Response.Cookies.Add(cookie);
             Response.Cookies["UserID"].Value = IDText.Text;
-            cookie.Expires = DateTime.Now.AddDays(1);
-
+            
+            mySerialPort = new SerialPort("COM5", 9600, Parity.None, 8, StopBits.One);
+            mySerialPort.RtsEnable = true;
+            mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+        }
+        private void DataReceivedHandler(
+                       object sender,
+                       SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+                finger = Convert.ToInt32(mySerialPort.ReadLine());
+            }
+            catch (InvalidOperationException)
+            {
+                string fail = @"<script language='JavaScript'>
+                                window.alert('다시 시도해주세요 !');
+                                </script>";
+                Response.Write(fail);
+            }
         }
         protected void LoginButton1_Click(object sender, EventArgs e)
         {
@@ -64,7 +82,52 @@ namespace capstonebook
 
         protected void FingerLogin_Click(object sender, EventArgs e)
         {
-
+            if (mySerialPort.IsOpen == false)
+            {
+                mySerialPort.Open();
+                mySerialPort.Write("2");
+            }
+            while (true)
+            {
+                User user = new User
+                {
+                    delayday = finger
+                };
+                if (finger != -1)
+                {
+                    SqlConnection con = new SqlConnection();
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                    
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandText = @"select id, password, delayday From dbo.[user] where delayday = @delayday";
+                    cmd.Parameters.AddWithValue("@delayday", user.delayday);
+                    cmd.CommandType = System.Data.CommandType.Text;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if(user.delayday==0)
+                        {
+                            user.delayday++;
+                        }
+                        if ((int)reader["delayday"] == user.delayday )
+                        {
+                            Response.Cookies["UserID"].Value = (string)reader["id"];
+                            reader.Close();
+                            con.Close();    
+                            Response.Redirect("userMain.aspx");
+                        }
+                    }
+                    reader.Close();
+                    con.Close();
+                    if (mySerialPort.IsOpen == true)
+                    {
+                        mySerialPort.Close();
+                    }
+                    return;
+                }
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ namespace capstonebook
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.Write("<script>alert('로그인 !');</script>");
         }
 
         protected void Button2_Click(object sender, EventArgs e)
